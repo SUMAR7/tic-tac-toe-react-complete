@@ -1,3 +1,6 @@
+# tic-tac-toe-react-complete
+This repository contains the code complete tic tac toe game in react JS tutorials plus additional tasks given at the end of tutorial. 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
