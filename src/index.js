@@ -65,7 +65,8 @@ class Game extends React.Component {
         super(props);
         this.state = {
             history: [{
-                squares: Array(9).fill(null)
+                squares: Array(9).fill(null),
+                position: 0
             }],
             xIsNext: true,
             stepNumber: 0,
@@ -84,6 +85,7 @@ class Game extends React.Component {
             history: history.concat([
                 {
                     squares: squares,
+                    position: i
                 }
             ]),
             stepNumber: history.length,
@@ -91,7 +93,7 @@ class Game extends React.Component {
         })
     }
 
-    jumpTo(step){
+    jumpTo(step) {
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
@@ -103,8 +105,39 @@ class Game extends React.Component {
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
-        const moves = history.map((setp, move) => {
-            const desc = move ? 'Go to move #' + move :
+        const moves = history.map((step, move) => {
+            let position;
+
+            switch (step.position) {
+                case 0:
+                    position = '(1, 1)';
+                    break;
+                case 1:
+                    position = '(1, 2)';
+                    break;
+                case 2:
+                    position = '(1, 3)';
+                    break;
+                case 3:
+                    position = '(2, 1)';
+                    break;
+                case 4:
+                    position = '(2, 2)';
+                    break;
+                case 5:
+                    position = '(2, 3)';
+                    break;
+                case 6:
+                    position = '(3, 1)';
+                    break;
+                case 7:
+                    position = '(3, 2)';
+                    break;
+                default:
+                    position = '(3, 3)'
+            }
+
+            const desc = move ? 'Go to move #' + move + ' position: ' + position :
                 'Go to game start';
             return (
                 <li key={move}>
