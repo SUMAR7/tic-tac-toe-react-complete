@@ -18,8 +18,9 @@ import './index.css';
 
 // square class is reduced to a function
 function Square(props) {
+    console.log(props.position);
     return (
-        <button className='square' onClick={props.onClick}>
+        <button className={props.position ? 'square-selected' : 'square'} onClick={props.onClick}>
             {props.value}
         </button>
     )
@@ -29,7 +30,8 @@ class Board extends React.Component {
 
     renderSquare(i) {
         return (
-            <Square value={this.props.squares[i]}
+            <Square value={this.props.current.squares[i]}
+                    position={(i + 1) === this.props.current.position ? this.props.current.position : null}
                     onClick={() => {
                         this.props.onClick(i)
                     }}/>
@@ -85,7 +87,7 @@ class Game extends React.Component {
             history: history.concat([
                 {
                     squares: squares,
-                    position: i
+                    position: i + 1
                 }
             ]),
             stepNumber: history.length,
@@ -109,28 +111,28 @@ class Game extends React.Component {
             let position;
 
             switch (step.position) {
-                case 0:
+                case 1:
                     position = '(1, 1)';
                     break;
-                case 1:
+                case 2:
                     position = '(1, 2)';
                     break;
-                case 2:
+                case 3:
                     position = '(1, 3)';
                     break;
-                case 3:
+                case 4:
                     position = '(2, 1)';
                     break;
-                case 4:
+                case 5:
                     position = '(2, 2)';
                     break;
-                case 5:
+                case 6:
                     position = '(2, 3)';
                     break;
-                case 6:
+                case 7:
                     position = '(3, 1)';
                     break;
-                case 7:
+                case 8:
                     position = '(3, 2)';
                     break;
                 default:
@@ -159,7 +161,7 @@ class Game extends React.Component {
             <div className="game">
                 <div className="game-board">
                     <Board
-                        squares={current.squares}
+                        current={current}
                         onClick={(i) => {
                             this.handleClick(i)
                         }}
